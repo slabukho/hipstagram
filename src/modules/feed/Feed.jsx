@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react'
 import {
     ContainerFeedStyled,
     PostStyled,
-    TopBorder,
-    BottomBorder
+
 } from './styled'
 import Header from '../../components/header'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentUserInfo, getUserTokenSelector, getpostsStateSelector, getUserSelector } from '../../store/users/selectors'
+import { getCurrentUserInfo, getUserTokenSelector, getpostsStateSelector } from '../../store/users/selectors'
 import like from '../../imgs/Like.png'
 import likeTrue from '../../imgs/like-true.png'
-import Input from '../../components/input'
-import Button from '../../components/button'
-import { changeThemeAction } from '../../store/users/actions'
-import { useForm } from "react-hook-form";
-import { getUserThunk, changeUserThunk, updateUserPasswordThunk, getPostsThunk, likeUserThunk } from '../../store/users/thunks'
+import { getPostsThunk, likeUserThunk } from '../../store/users/thunks'
+import { AddComments } from '../../components/Modal/styled'
+import send from '../../imgs/send.png'
+
 
 
 const Post = ({ post }) => {
@@ -34,23 +32,31 @@ const Post = ({ post }) => {
     }
     return (
         <>
-            <TopBorder />
             <PostStyled>
                 <img src={post.imgUrl} alt=''
                     onDoubleClick={clickLike}
                 />
                 <div>
-                    <img src={isLiked ? likeTrue : like} alt="like"
-                        onClick={clickLike}
-                    />
-
-                    {post.likes && post.likes.length ? 'Likes ' : ''} <b>{post.likes && post.likes.length ? post.likes[0].login : <p>no one did not like</p>}</b> {post.likes && post.likes.length > 1 ? <p>and</p> : ''} <b>{post.likes && post.likes.length > 1 ? post.likes.length - 1 : ''}</b> {post.likes && post.likes.length > 1 ? <p>other...</p> : ''}
-                </div>
-                <div>
-                    <p>{post.title}</p>
+                    <div>
+                        <img src={isLiked ? likeTrue : like} alt="like"
+                            onClick={clickLike}
+                        />
+                        <img src={send} alt="send" />
+                        {post.likes && post.likes.length ? 'Likes ' : ''} <b>{post.likes && post.likes.length ? post.likes[0].login : 'no one did not like'}</b> {post.likes && post.likes.length > 1 ? <p>and</p> : ''} <b>{post.likes && post.likes.length > 1 ? post.likes.length - 1 : ''}</b> {post.likes && post.likes.length > 1 ? <p>other...</p> : ''}
+                    </div>
+                    <div>
+                        <p>{post.title}</p>
+                    </div>
+                    <hr />
+                    <AddComments>
+                        <form action="">
+                            <textarea placeholder='Add comment...' />
+                            <button type="submit" value="Send" ><p>send</p></button>
+                        </form>
+                    </AddComments>
                 </div>
             </PostStyled>
-            <BottomBorder />
+
         </>
     )
 }
@@ -67,7 +73,7 @@ const Feeds = () => {
     console.log(posts)
     return (
         <>
-            <Header user={user} />
+            <Header feed />
             <ContainerFeedStyled>
                 {posts && posts.slice(0).reverse().map(post => {
                     return <Post post={post} key={post._id} />

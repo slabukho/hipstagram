@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/header'
 import Button from '../../components/button'
-import { Link, useParams } from 'react-router-dom';
-import photo from '../../imgs/ava.jpg'
+import { useParams } from 'react-router-dom';
 import ava from '../../imgs/ava.png'
 import {
     ContainerUserStyled,
@@ -22,8 +21,6 @@ import Modal from '../../components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserThunk, followUserThunk } from '../../store/users/thunks'
 import { getUserSelector, getUserTokenSelector, getCurrentUserInfo } from '../../store/users/selectors'
-import { getUserAction } from '../../store/users/actions'
-import guide from '../../constants/modulesGuide'
 
 
 const PictureUser = (props) => {
@@ -38,7 +35,7 @@ const PictureUser = (props) => {
     )
 }
 
-const UserConteiner = ({ user, setPostId, switchModal }) => {
+const UserConteiner = ({ user, setPostId, openPost }) => {
     const currentUser = { ...useSelector(getCurrentUserInfo) }
     useEffect(() => {
         currentUser.following && currentUser.following.forEach(follower => {
@@ -72,7 +69,7 @@ const UserConteiner = ({ user, setPostId, switchModal }) => {
             <hr />
             <PuplicationsUser>
                 {user.posts && user.posts.slice(0).reverse().map(post => {
-                    return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={switchModal} key={post._id} />
+                    return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={openPost} key={post._id} />
                 })}
                 {user.posts && !user.posts.length && <p>Not puplications yet</p>}
             </PuplicationsUser>
@@ -94,13 +91,13 @@ const SearchedUser = (props) => {
     const [isOpen, setOpen] = useState(false)
     isOpen && disableScroll()
     !isOpen && enableScroll()
-    const switchModal = () => setOpen(!isOpen)
+    const openPost = () => setOpen(!isOpen)
     return (
         (<>
             <Header headerText='User' setThem={props.setThem} theme={props.theme} user={user} />
             <UserStyled >
-                <UserConteiner switchModal={switchModal} setPostId={setPostId} user={user} />
-                {isOpen && <Modal switchModal={switchModal} isOpen={isOpen} id={postId} />}
+                <UserConteiner openPost={openPost} setPostId={setPostId} user={user} />
+                {isOpen && <Modal openPost={openPost} isOpen={isOpen} id={postId} user={user} isPost />}
             </UserStyled>
         </>
         )

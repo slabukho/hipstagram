@@ -97,6 +97,12 @@ const userReducer = (state = InitialState(), action) => {
                 posts: action.payload
             }
         }
+        case actionTypes.GET_COMMENTS: {
+            return {
+                ...state,
+                comments: action.payload
+            }
+        }
         default:
             return state;
     }

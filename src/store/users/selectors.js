@@ -12,6 +12,8 @@ export const getCurrentUserIsAuth = state => getCurrentUser(state).isAuth
 
 export const getCurrentUserInfo = state => userStateSelector(state).user
 
+export const getCommentsSelector = state => userStateSelector(state).comments
+
 export const getUsersSelector = state => userStateSelector(state).users
 
 export const themeStateSelector = state => state.theme

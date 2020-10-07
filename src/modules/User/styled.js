@@ -77,8 +77,8 @@ export const Image = styled.div`
             display:flex;
             align-items:center;
             justify-content:center;
-            max-height:14vw;
-            background:${props => props.theme.bgColor};
+            height:14vw;
+            background-color:${props => props.theme.bgColor};
         &>img{
             width: 100%;
         }
@@ -91,6 +91,25 @@ export const ImgAva = styled.div`
                 border-radius: 100px;
                 position: relative;
                 left: 0;
+                &>div{
+                    position: absolute;
+                    background-color:gray;
+                    z-index:1;
+                    cursor: pointer;
+                    opacity:0;
+                    width: 10vw;
+                    height: 10vw;
+                    :hover{
+                        opacity:0.5;
+                    }
+                    &>img{
+                        width:3vw;
+                        position: absolute;
+                    top:50%;
+                    left:50%;
+                    transform: translate(-50%,-50%);
+                    }
+                }
                 &>img{
                     position: absolute;
                     top:50%;
@@ -115,9 +134,7 @@ export const PuplicationsUser = styled.div`
                 }
 `;
 
-export const Plus = styled.div.attrs({
-    onClick: props => props.onClick
-})`
+export const Plus = styled.div`
     width:50px;
     height:50px;
     position: absolute;

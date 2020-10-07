@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/header'
-import Button from '../../components/button'
-import { Link } from 'react-router-dom';
-import photo from '../../imgs/ava.jpg'
 import ava from '../../imgs/ava.png'
+import plus from '../../imgs/plus.svg'
 import {
     ContainerUserStyled,
     UserStyled,
@@ -20,9 +18,8 @@ import {
 } from '../../components/stopeScroll'
 import Modal from '../../components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserInfoThunk, getUserThunk } from '../../store/users/thunks'
-import { getUserTokenSelector, getCurrentUserInfo, getUserSelector, getSelectedUserSelector, getUsersSelector } from '../../store/users/selectors'
-import guide from '../../constants/modulesGuide'
+import { getUserInfoThunk } from '../../store/users/thunks'
+import { getUserTokenSelector, getCurrentUserInfo } from '../../store/users/selectors'
 
 
 const PictureUser = (props) => {
@@ -37,12 +34,15 @@ const PictureUser = (props) => {
     )
 }
 
-const UserConteiner = ({ user, setPostId, switchModal }) => {
+const UserConteiner = ({ user, setPostId, openPost, openAddphoto, openAddPost }) => {
     console.log(user.followers)
     return (
         <ContainerUserStyled>
             <HeaderUserStyled>
                 <ImgAva>
+                    <div onClick={openAddphoto}>
+                        <img src={plus} alt="" />
+                    </div>
                     <img src={user.avatar || ava} alt="" />
                 </ImgAva>
                 <div    >
@@ -54,11 +54,11 @@ const UserConteiner = ({ user, setPostId, switchModal }) => {
                     <p>{user.firstName} {user.lastName}</p>
                 </div>
             </HeaderUserStyled>
-            <Link to={guide.auth.newPost.path}><Plus /></Link>
+            <Plus onClick={openAddPost} />
             <hr />
             <PuplicationsUser>
                 {user.posts && user.posts.slice(0).reverse().map(post => {
-                    return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={switchModal} key={post._id} />
+                    return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={openPost} key={post._id} />
                 })}
                 {!user.posts && <p>Not puplications yet</p>}
             </PuplicationsUser>
@@ -70,24 +70,39 @@ const UserConteiner = ({ user, setPostId, switchModal }) => {
 
 
 const User = (props) => {
-
     const dispatch = useDispatch()
     const token = useSelector(getUserTokenSelector)
     useEffect(() => {
         dispatch(getUserInfoThunk({ token: token }))
     }, []);
     const user = { ...useSelector(getCurrentUserInfo) }
+    const [isPost, setPost] = useState(false)
     const [postId, setPostId] = useState(null)
     const [isOpen, setOpen] = useState(false)
+    const [isAva, setIsAva] = useState(false)
     isOpen && disableScroll()
     !isOpen && enableScroll()
-    const switchModal = () => setOpen(!isOpen)
+    const openPost = () => {
+        setPost(true)
+        setOpen(!isOpen)
+    }
+    const openAddphoto = () => {
+        setOpen(!isOpen)
+        setPost(false)
+        setIsAva(true)
+    }
+    const openAddPost = () => {
+        setOpen(!isOpen)
+        setPost(false)
+        setIsAva(false)
+        console.log('dsad')
+    }
     return (
         (<>
             <Header headerText='User' setThem={props.setThem} theme={props.theme} user={user} />
             <UserStyled >
-                <UserConteiner switchModal={switchModal} setPostId={setPostId} user={user} />
-                {isOpen && <Modal switchModal={switchModal} isOpen={isOpen} id={postId} />}
+                <UserConteiner openPost={openPost} openAddphoto={openAddphoto} setPostId={setPostId} user={user} setPost={setPost} setIsAva={setIsAva} openAddPost={openAddPost} />
+                {isOpen && <Modal openPost={openPost} isOpen={isOpen} id={postId} isPost={isPost} isAva={isAva} />}
             </UserStyled>
         </>
         )

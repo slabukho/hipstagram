@@ -2,10 +2,13 @@ import styled from 'styled-components'
 
 
 export const ModalStyled = styled.div`
+    z-index:100;
     position: fixed;
     left: 0;
+    top:0;
     height: calc(100vh - 60px);
     width: 100vw;
+    height:100vh;
     background-color: rgba(0, 0, 0, 0.5);
     color:${props => props.theme.textColor};
     &>div{
@@ -20,7 +23,7 @@ export const ModalStyled = styled.div`
     }
     &>span{
         position: absolute;
-        top: 35px;
+        top: 85px;
         right: 100px;
         width: 55px;
         height: 55px;
@@ -85,9 +88,19 @@ export const InfoOpenImage = styled.div`
 
 export const UserInfoOpen = styled.div`
                 display: flex;
+                flex-direction:column;
                 justify-content: center;
                 border-bottom: ${props => props.theme.border};
                 position: relative;
+                &>p{
+                        margin-left:10px;
+                    }
+                &>div{
+
+                    display:flex;
+                    &>p{
+                        margin-left:70px;
+                    }
                 &>div{
                     height: 50px;
                     width: 50px;
@@ -98,7 +111,8 @@ export const UserInfoOpen = styled.div`
                     top:2.5px;
                     &>img{
                         width: 60px;
-                    }
+                    }}
+
                 }
                 &>span{
                     position: absolute;
@@ -114,10 +128,13 @@ export const OpenComments = styled.div`
 overflow: auto;
 height:350px;
 padding-top:10px;
+display:flex;
+flex-direction: column;
  &>div{
     display:flex;
+    flex-direction:column;
     width:100%;
-    justify-content: center;
+    min-height:80px;
     &>p{
         width: calc(100% - 70px);
         margin: 0 10px;
@@ -134,6 +151,44 @@ padding-top:10px;
                 }
 
 `;
+
+export const CommentStyled = styled.div`
+    position: relative;
+     &>div{
+            display:flex;
+            height: 50px;
+            width: 50px;
+            overflow: hidden;
+            border-radius: 100px;
+            position: absolute;
+            left:10px;
+            top:2.5px;
+
+            &>div{
+
+                &>img{
+                position: absolute;
+                left:0;
+                width: 40px;
+        }}}
+        &>b{
+                    position: absolute;
+                    left:60px;
+                    top:15px;
+                    &>img{
+                        width:15px;
+                        position: absolute;
+                        cursor: pointer;
+                        left:250%;
+                    }
+                }
+        &>p{
+                    position: absolute;
+                    left:50px;
+                    top:50px;
+                }
+`;
+
 export const LikesOpen = styled.div`
                  margin-top:20px;
                  border-top: ${props => props.theme.border};
@@ -166,19 +221,112 @@ export const AddComments = styled.div`
     margin:0 ;
     padding:0;
     position: relative;
-    &>input{
-        width:100%;
+    &>form{
+    &>textarea{
+        width:80%;
         background: transparent;
         border: none;
+        resize:none;
         color:${props => props.theme.textColor};
         ::placeholder { color: ${props => props.theme.textColor}; }
     }
-    &>p{
+    &>button{
         position: absolute;
         color:${props => props.theme.linkColor};
-        right:25px;
-        top:0;
+        right:-10px;
+        top:-50%;
         cursor: pointer;
-
+        background-color: inherit;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        display: inline-block;
+        border:none;
+    }
     }
 `;
+
+
+export const ContainerNewAva = styled.section`
+        margin:  auto;
+        background-color: ${props => props.theme.bgInner};
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        text-align: center;
+`;
+
+export const StyledFormNewAva = styled.form.attrs(props => ({
+    onSubmit: props.onSubmit
+    ,
+}))`
+    display: flex;
+    flex-direction: column;
+    & > button {
+        margin: 50px auto;
+        position:relative;
+        & > img{
+            position:absolute;
+            width:150px;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%)
+      }
+      }
+      &>div{
+          align-self:center;
+          &>label{
+            width: 180px;
+            height: 50px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 25px;
+            cursor: pointer;
+            display: block;
+            font: 14px/50px Tahoma;
+            transition: all 0.18s ease-in-out;
+            border: 1px solid #4FD666;
+            background: linear-gradient(to top right, #3EC97A, #69EA49 20%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0)) top right/500% 500%;
+            color: #4FD666;
+            &:hover{
+                color: white;
+                background-position: bottom left;
+            }
+          }
+          &>input{
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+          }
+        &>{
+          color:${props => props.theme.textColor};
+          }
+          &>p{
+              color:red;
+          }
+      }
+      
+`;
+
+export const StyledFormNewPost = styled(StyledFormNewAva)`
+&>textarea{
+        padding:15px;
+        margin: 0 auto ; 
+        width:400px;
+        border:none ;
+        font-size:20px;
+        font-family:'Montserrat Alternates';
+        border-radius:10px;outline:none;
+        transition: box-shadow .3s ease;
+        &:hover{box-shadow:0px 0px 13px 0px ${props => props.theme.background}} 
+      }
+`
+
+

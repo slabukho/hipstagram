@@ -13,10 +13,18 @@ export const ContainerFeedStyled = styled.section`
 `;
 
 export const PostStyled = styled.div`
+        margin-top:4vh;
         width:30vw;
+        border:${props => props.theme.border};
+        border-radius: 15px;
         &>img{
             width:100%;
+            border-radius: 15px 15px 0 0 ;
+            cursor: pointer;
         }
+        &>div{
+            margin-top:10px;
+            padding:0 20px;
         &>div{
             display:flex;
             align-items:center;
@@ -33,28 +41,7 @@ export const PostStyled = styled.div`
             &>p{
                 margin-left:5px;
             }
+        }
     }
 `;
 
-export const TopBorder = styled.hr`
-    width:100%;
-    height: 30px;
-    border-style: solid;
-    border-color: ${props => props.theme.background};
-    border-width: 1px 0 0 0;
-    border-radius: 20px;
-`;
-
-export const BottomBorder = styled.hr`
-    width:100%;
-    display: block;
-    content: "";
-    height: 30px;
-    margin-top: -31px;
-    border-style: solid;
-    border-color: ${props => props.theme.background};
-    border-width: 0 0 1px 0;
-    border-radius: 20px;
-    margin-bottom:80px;
-
-`;

@@ -11,7 +11,11 @@ import {
     getUsersByLoginFetch,
     followUserFetch,
     getFeedFetch,
-    likeFetch
+    likeFetch,
+    updateAvatarFetch,
+    getCommentByIdFetch,
+    createCommentFetch,
+    deleteCommentFetch
 } from '../../api/auth.api'
 import {
     loginTokenAction,
@@ -21,7 +25,8 @@ import {
     getPostAction,
     getUsersAction,
     getUserAction,
-    getPostsAction
+    getPostsAction,
+    getCommentsAction
 } from './actions'
 import { toast } from 'react-toastify';
 
@@ -186,24 +191,17 @@ export const updateUserPasswordThunk = ({ userData, token }) => {
 }
 
 export const addNewPostThunk = ({ formData, token, returnToUser, setLoading }) => {
-    return async () => {
+    return async (dispatch) => {
         try {
-            setLoading(true)
+            setLoading && setLoading(true)
             await addNewPostFetch({ formData, token })
+            dispatch(getUserInfoThunk({ token: token }))
             returnToUser()
         }
         catch (e) {
-            toast.error(e.response.data, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            console.log(e)
         }
-        setLoading(false)
+        setLoading && setLoading(false)
     }
 }
 
@@ -235,11 +233,6 @@ export const initThunk = () => {
     }
 }
 
-export const changeLoginThunk = () => {
-    return async (disptch) => {
-
-    }
-}
 
 export const changeUserThunk = ({ user, token }) => {
     return async (disptch) => {
@@ -259,7 +252,7 @@ export const changeUserThunk = ({ user, token }) => {
                 lastName,
                 login
             }))
-            toast.success(`Now you-${user.firstName || user.login} ${user.lastName ? user.lastName : ''}`, {
+            toast.success(`Data saved successfully`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -271,6 +264,48 @@ export const changeUserThunk = ({ user, token }) => {
             })
         } catch (e) {
             console.log(e)
+        }
+    }
+}
+
+export const changeAvatarThunk = ({ user, token }) => {
+    return async (dispatch) => {
+        try {
+            const {
+                avatar,
+                email,
+                firstName,
+                id,
+                lastName,
+                login } = await updateAvatarFetch({ user: user, token: token })
+            dispatch(updateUserAction({
+                avatar,
+                email,
+                firstName,
+                id,
+                lastName,
+                login
+            }))
+            toast.success(`Successful change avatar`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                onClose: () => window.location.assign("http://localhost:3000/login")
+            })
+        } catch (e) {
+            toast.error("Photo so large", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 }
@@ -301,6 +336,18 @@ export const getPostsThunk = (token) => {
     }
 }
 
+export const getCommentsThunk = ({ id, token }) => {
+    return async (dispatch) => {
+        try {
+            const comments = await getCommentByIdFetch({ id: id, token: token })
+            dispatch(getCommentsAction(comments))
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+}
+
 
 export const likeUserThunk = ({ id, token }) => {
     return async (dispatch) => {
@@ -316,4 +363,32 @@ export const likeUserThunk = ({ id, token }) => {
     }
 }
 
+
+export const createCommentThunk = ({ data, token, id }) => {
+    return async (dispatch) => {
+        try {
+            debugger
+            await createCommentFetch({ data: data, token: token })
+            const comments = await getCommentByIdFetch({ id: id, token: token })
+            dispatch(getCommentsAction(comments))
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+
+export const deleteCommentThunk = ({ commentId, token, id }) => {
+    return async (dispatch) => {
+        try {
+            await deleteCommentFetch({ commentId, token })
+            const comments = await getCommentByIdFetch({ id: id, token: token })
+            dispatch(getCommentsAction(comments))
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+}
 

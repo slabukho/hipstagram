@@ -18,9 +18,8 @@ const Authorization = () => {
             <Route path={guide.auth.search.path} component={guide.auth.search.component} />
             <Route path={`${guide.auth.user.path}/:id`} component={guide.auth.userSearched.component} />
             <Route path={guide.auth.settings.path} component={guide.auth.settings.component} />
-            <Route path={guide.auth.newPost.path} component={guide.auth.newPost.component} />
             <Route path={guide.auth.feed.path} component={guide.auth.feed.component} />
-            <Redirect to={guide.auth.user.path} />
+            <Redirect to={guide.auth.feed.path} />
         </Switch>
     )
 

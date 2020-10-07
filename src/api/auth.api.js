@@ -45,12 +45,21 @@ export const getUserByIdFetch = async id => {
 }
 
 export const updateUserFetch = async ({ user, token }) => {
-    const { data } = await axios.patch(url + '/users  ', user, { headers: { "Authorization": token } });
+    const { data } = await axios.patch(url + '/users/current', user, { headers: { "Authorization": token } });
     return data
 }
 
 export const updateLoginFetch = async ({ login, token }) => {
-    const { data } = await axios.patch(url + '/users  ', login, { headers: { "Authorization": token } });
+    const { data } = await axios.patch(url + '/users/current', login, { headers: { "Authorization": token } });
+    return data
+}
+
+export const updateAvatarFetch = async ({ user, token }) => {
+    debugger
+    const { data } = await axios.patch(url + '/users  ', user, {
+        headers: { "Authorization": token },
+        'Access-Control-Allow-Origin': '*'
+    });
     return data
 }
 
@@ -70,4 +79,19 @@ export const getFeedFetch = async (token) => {
 
 export const likeFetch = async ({ id, token }) => {
     await axios.get(url + '/posts/like/' + id, { headers: { "Authorization": token } })
+}
+
+export const getCommentByIdFetch = async ({ id, token }) => {
+    const { data } = await axios.get(url + '/comments/' + id, { headers: { "Authorization": token } })
+    return data
+}
+
+export const createCommentFetch = async ({ data, token }) => {
+    debugger
+    await axios.post(url + '/comments', data, { headers: { "Authorization": token } })
+}
+
+
+export const deleteCommentFetch = async ({ commentId, token }) => {
+    await axios.delete(url + '/comments/' + commentId, { headers: { "Authorization": token } })
 }

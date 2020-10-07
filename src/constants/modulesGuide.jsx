@@ -3,7 +3,6 @@ import Search from '../modules/searchUsers'
 import User from '../modules/User'
 import SearchedUser from '../modules/User/SearchedUser'
 import Settings from '../modules/settings'
-import NewPost from '../modules/newPost'
 import Feed from '../modules/feed'
 
 
@@ -24,10 +23,6 @@ export default {
         settings: {
             path: '/settings',
             component: Settings
-        },
-        newPost: {
-            path: '/newPost',
-            component: NewPost
         },
         feed: {
             path: '/feed',

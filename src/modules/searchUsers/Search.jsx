@@ -76,7 +76,7 @@ const Search = (props) => {
         dispatch(getUsersThunk(token))
     }, []);
     const users = [...useSelector(getUsersSelector)]
-    users.forEach((person, i) => {
+    users && users.forEach((person, i) => {
         person._id === currentUser.id && users.splice(i, 1)
     })
     return (

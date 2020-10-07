@@ -12,8 +12,12 @@ import Input from '../../components/input'
 import Button from '../../components/button'
 import { changeThemeAction } from '../../store/users/actions'
 import { useForm } from "react-hook-form";
-import { changeLoginThunk, changeUserThunk, updateUserPasswordThunk } from '../../store/users/thunks'
+import { changeUserThunk, updateUserPasswordThunk } from '../../store/users/thunks'
 import { HashLink as Link } from 'react-router-hash-link';
+import {
+
+    emailValidData,
+} from '../../constants/Patterns'
 
 
 
@@ -68,8 +72,30 @@ const ChangeUserLogin = ({ user, dispatch, token }) => {
                     ref={register()}
                     defaultValue={user.login}
                 />
-                <label>Last name:</label>
                 <Button children={'Change Login'} />
+            </StyledUserChangeForm>
+        </>
+    )
+}
+
+const ChangeUserEmail = ({ user, dispatch, token }) => {
+    const { register, handleSubmit } = useForm()
+    const onSubmitChangeInfo = user => {
+        dispatch(changeUserThunk({ user, token }))
+    }
+    return (
+        <>
+            <p id='email'>Change Email:</p>
+            <StyledUserChangeForm onSubmit={handleSubmit(onSubmitChangeInfo)} >
+                <label>Email:</label>
+                <Input
+                    name='email'
+                    type='text'
+                    placeholder='Enter new Email'
+                    ref={register(emailValidData)}
+                    defaultValue={user.email}
+                />
+                <Button children={'Change Email'} />
             </StyledUserChangeForm>
         </>
     )
@@ -138,13 +164,14 @@ const Settings = () => {
     const user = { ...useSelector(getCurrentUserInfo) }
     return (
         <>
-            <Header user={user} />
+            <Header settings />
 
             <StyledSettings>
                 <div>
                     <Link to='/settings/#name'>Name⇩</Link >
                     <Link to='/settings/#password'>Password⇩</Link >
                     <Link to='/settings/#login'>Login⇩</Link >
+                    <Link to='/settings/#email'>Email⇩</Link >
                 </div>
                 <hr />
                 <p>Dark Theme:</p>
@@ -156,7 +183,8 @@ const Settings = () => {
                 <hr />
                 <ChangeUserInfo dispatch={dispatch} token={token} user={user} />
                 <hr />
-
+                <ChangeUserEmail dispatch={dispatch} token={token} user={user} />
+                <hr />
                 <ChangePasswordUserForm dispatch={dispatch} token={token} />
                 <hr />
                 <ChangeUserLogin dispatch={dispatch} token={token} user={user} />

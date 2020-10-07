@@ -90,8 +90,27 @@ export const getPostsAction = posts => {
 }
 
 
-export const likePost = id => {
+export const likePost = () => {
     return {
         type: actionTypes.LIKE_POST
+    }
+}
+
+export const changeAva = () => {
+    return {
+        type: actionTypes.CHANGE_AVA,
+    }
+}
+
+export const getCommentsAction = comments => {
+    return {
+        type: actionTypes.GET_COMMENTS,
+        payload: comments
+    }
+}
+
+export const createPostAcion = () => {
+    return {
+        type: actionTypes.CREATE_POST
     }
 }
