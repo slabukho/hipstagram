@@ -58,7 +58,7 @@ export const ContainerNoPosts = styled.div`
             position: absolute;
             top:50%;
             left:50%;
-            transform:trgianslate(-50%,-50%)
+            transform:translate(-50%,-50%)
         }
         &>b{
             font-size:40px;

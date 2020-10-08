@@ -39,6 +39,7 @@ export const loginThunk = userData => {
             localStorage.setItem('accessToken', access_token);
             dispatch(loginTokenAction(access_token))
         } catch (e) {
+
             toast.error('login or passworn isn`t correct', {
                 position: "top-right",
                 autoClose: 5000,
@@ -79,15 +80,9 @@ export const getUserInfoThunk = data => {
                 following
             }))
         } catch (e) {
-            toast.error(e, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
         data.loader && data.loader(false)
     }
@@ -131,7 +126,9 @@ export const getUsersThunk = token => {
             dispatch(getUsersAction(users))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -157,7 +154,9 @@ export const getUserThunk = ({ id, setLoading }) => {
             dispatch(getUserAction(user))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
         setLoading(false)
     }
@@ -188,6 +187,7 @@ export const updateUserPasswordThunk = ({ userData, token }) => {
                 draggable: true,
                 progress: undefined,
             });
+
         }
     }
 }
@@ -201,7 +201,9 @@ export const addNewPostThunk = ({ formData, token, returnToUser, setLoading }) =
             returnToUser()
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
         setLoading && setLoading(false)
     }
@@ -216,7 +218,9 @@ export const getPostThunk = ({ id, setLoading }) => {
             dispatch(getPostAction(post))
         }
         catch (e) {
-
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
         setLoading && setLoading(false)
     }
@@ -231,13 +235,16 @@ export const initThunk = () => {
                 dispatch(loginTokenAction(token))
         }
         catch (e) {
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
 
 
 export const changeUserThunk = ({ user, token }) => {
-    return async (disptch) => {
+    return async (dispatch) => {
         try {
             const {
                 avatar,
@@ -246,7 +253,7 @@ export const changeUserThunk = ({ user, token }) => {
                 id,
                 lastName,
                 login } = await updateUserFetch({ user: user, token: token })
-            disptch(updateUserAction({
+            dispatch(updateUserAction({
                 avatar,
                 email,
                 firstName,
@@ -265,7 +272,9 @@ export const changeUserThunk = ({ user, token }) => {
                 onClose: () => window.location.assign("http://localhost:3000/login")
             })
         } catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -308,6 +317,9 @@ export const changeAvatarThunk = ({ user, token }) => {
                 draggable: true,
                 progress: undefined,
             });
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -320,7 +332,9 @@ export const followUserThunk = ({ id, token }) => {
             dispatch(getUserThunk(id))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -334,7 +348,9 @@ export const getPostsThunk = ({ token, setLoading }) => {
             dispatch(getPostsAction(posts))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
         setLoading && setLoading(false)
     }
@@ -347,7 +363,9 @@ export const getCommentsThunk = ({ id, token }) => {
             dispatch(getCommentsAction(comments))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -362,7 +380,9 @@ export const likeUserThunk = ({ id, token }) => {
 
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -377,7 +397,9 @@ export const createCommentThunk = ({ data, token, id }) => {
             dispatch(getCommentsAction(comments))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }
@@ -391,7 +413,9 @@ export const deleteCommentThunk = ({ commentId, token, id }) => {
             dispatch(getCommentsAction(comments))
         }
         catch (e) {
-            console.log(e)
+            if (e.response.status === 401) {
+                dispatch(logoutAction())
+            }
         }
     }
 }

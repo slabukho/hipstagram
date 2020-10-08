@@ -77,7 +77,7 @@ const Feeds = () => {
             <Header feed />
             {posts && posts.length ?
                 <ContainerFeedStyled>
-                    {isLoading && <img src={loader} /> || posts && posts.slice(0).reverse().map(post => {
+                    {isLoading && <img src={loader} /> || posts?.slice(0).reverse().map(post => {
                         return <Post post={post} key={post._id} />
                     })}
                 </ContainerFeedStyled> :

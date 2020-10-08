@@ -22,7 +22,7 @@ import guide from '../../constants/modulesGuide'
 const User = ({ user, currentUser, selectedUser }) => {
     const [isFollow, setFollow] = useState(false)
     useEffect(() => {
-        currentUser.following.forEach(follower => {
+        currentUser.following && currentUser.following.forEach(follower => {
             if (follower.id === user._id) setFollow(true)
         })
     }, []);
