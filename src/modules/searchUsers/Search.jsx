@@ -29,8 +29,7 @@ const User = ({ user, currentUser, selectedUser }) => {
     const token = useSelector(getUserTokenSelector)
     const follow = async () => {
         dispatch(followUserThunk({ id: user._id, token: token }))
-        dispatch(getUserThunk(user._id))
-        debugger
+        dispatch(getUserThunk({ id: user._id }))
         setFollow(!isFollow)
     }
     const dispatch = useDispatch()

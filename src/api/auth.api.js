@@ -55,7 +55,6 @@ export const updateLoginFetch = async ({ login, token }) => {
 }
 
 export const updateAvatarFetch = async ({ user, token }) => {
-    debugger
     const { data } = await axios.patch(url + '/users  ', user, {
         headers: { "Authorization": token },
         'Access-Control-Allow-Origin': '*'
@@ -87,7 +86,7 @@ export const getCommentByIdFetch = async ({ id, token }) => {
 }
 
 export const createCommentFetch = async ({ data, token }) => {
-    debugger
+
     await axios.post(url + '/comments', data, { headers: { "Authorization": token } })
 }
 

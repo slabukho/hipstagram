@@ -105,7 +105,6 @@ const ChangeUserEmail = ({ user, dispatch, token }) => {
 const ChangePasswordUserForm = ({ dispatch, token }) => {
     const { register, handleSubmit, errors, watch } = useForm()
     const onSubmitChangePassword = userData => {
-        debugger
         dispatch(updateUserPasswordThunk({ userData, token }))
     }
     const password = useRef({});

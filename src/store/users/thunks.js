@@ -348,9 +348,7 @@ export const getPostsThunk = ({ token, setLoading }) => {
             dispatch(getPostsAction(posts))
         }
         catch (e) {
-            if (e.response.status === 401) {
-                dispatch(logoutAction())
-            }
+
         }
         setLoading && setLoading(false)
     }
@@ -376,13 +374,10 @@ export const likeUserThunk = ({ id, token }) => {
         try {
             await likeFetch({ id, token })
             dispatch(getPostThunk({ id: id, token: token }))
-            dispatch(getPostsThunk(token))
-
+            dispatch(getPostsThunk({ token: token }))
         }
         catch (e) {
-            if (e.response.status === 401) {
-                dispatch(logoutAction())
-            }
+
         }
     }
 }
@@ -391,7 +386,6 @@ export const likeUserThunk = ({ id, token }) => {
 export const createCommentThunk = ({ data, token, id }) => {
     return async (dispatch) => {
         try {
-            debugger
             await createCommentFetch({ data: data, token: token })
             const comments = await getCommentByIdFetch({ id: id, token: token })
             dispatch(getCommentsAction(comments))

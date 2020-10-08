@@ -171,7 +171,7 @@ const Modal = (props) => {
             if (likedUser._id === user.id) setLike(true)
         })
         dispatch(getCommentsThunk({ id: post._id, token: token }))
-    }, [post.likes]);
+    }, [post._id]);
     const [isLoading, setLoading] = useState(false)
     const [isLiked, setLike] = useState(false)
     const token = useSelector(getUserTokenSelector)

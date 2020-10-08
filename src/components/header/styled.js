@@ -10,7 +10,9 @@ export const HeaderStyled = styled.header`
     width: 100vw;
     height: 60px;
     background-color:${props => props.theme.background} ;
-    position: relative;
+    position: sticky;
+    top:0;
+    z-index:1000;
     &>div{
             position: absolute;
             top:25%;
