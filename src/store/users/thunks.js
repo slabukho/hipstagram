@@ -148,7 +148,7 @@ export const getUsersByLoginThunk = ({ login, token }) => {
 
 export const getUserThunk = ({ id, setLoading }) => {
     return async (dispatch) => {
-        setLoading(true)
+        setLoading && setLoading(true)
         try {
             const user = await (getUserByIdFetch(id))
             dispatch(getUserAction(user))
@@ -158,7 +158,7 @@ export const getUserThunk = ({ id, setLoading }) => {
                 dispatch(logoutAction())
             }
         }
-        setLoading(false)
+        setLoading && setLoading(false)
     }
 }
 

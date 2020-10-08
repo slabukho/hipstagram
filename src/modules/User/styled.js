@@ -80,7 +80,7 @@ export const Image = styled.div`
             height:14vw;
             background-color:${props => props.theme.bgColor};
         &>img{
-            width: 100%;
+            height:100%;
         }
  `
 
