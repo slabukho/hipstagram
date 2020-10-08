@@ -5,7 +5,7 @@ import Button from '../../components/button'
 import Input from '../../components/input'
 import { useForm } from "react-hook-form";
 import FieldContainer from './components/FieldConteiner'
-import loading from '../../imgs/loading.gif'
+import loading from '../../imgs/authLoading.gif'
 import { Switch, Route, Link, Redirect, useHistory } from 'react-router-dom';
 import guide from '../../constants/modulesGuide'
 import {

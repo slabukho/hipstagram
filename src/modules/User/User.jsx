@@ -60,7 +60,7 @@ const UserConteiner = ({ user, setPostId, openPost, openAddphoto, openAddPost })
                 {user.posts && user.posts.slice(0).reverse().map(post => {
                     return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={openPost} key={post._id} />
                 })}
-                {!user.posts && <p>Not puplications yet</p>}
+                {user.posts && !user.posts.length && <p>Not puplications yet</p>}
             </PuplicationsUser>
         </ContainerUserStyled>
     )

@@ -10,6 +10,9 @@ export const ContainerFeedStyled = styled.section`
             background-color:${props => props.theme.bgInner};
             position: relative;
             color:${props => props.theme.textColor};
+            &>img{
+                margin:auto;
+            }
 `;
 
 export const PostStyled = styled.div`
@@ -45,3 +48,25 @@ export const PostStyled = styled.div`
     }
 `;
 
+
+
+export const ContainerNoPosts = styled.div`
+        height: calc(100vh - 60px);
+        position: relative;
+        &>img{
+            width:50vh;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%)
+        }
+        &>b{
+            font-size:40px;
+            position: absolute;
+            top:70%;
+            left:50%;
+            transform:translate(-50%,0)
+
+        }
+
+`;

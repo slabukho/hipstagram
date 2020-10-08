@@ -10,7 +10,8 @@ import {
     ImgAva,
     PuplicationsUser,
     Image,
-    FollowingButton
+    FollowingButton,
+    Preloader
 } from './styled'
 import {
     disableScroll,
@@ -21,7 +22,7 @@ import Modal from '../../components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserThunk, followUserThunk } from '../../store/users/thunks'
 import { getUserSelector, getUserTokenSelector, getCurrentUserInfo } from '../../store/users/selectors'
-
+import loading from '../../imgs/loading.gif'
 
 const PictureUser = (props) => {
     const openModal = () => {
@@ -82,8 +83,9 @@ const UserConteiner = ({ user, setPostId, openPost }) => {
 
 const SearchedUser = (props) => {
     useEffect(() => {
-        dispatch(getUserThunk(id))
+        dispatch(getUserThunk({ id: id, setLoading: setLoading }))
     }, []);
+    const [isLoading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const { id } = useParams();
     let user = { ...useSelector(getUserSelector) }
@@ -93,14 +95,15 @@ const SearchedUser = (props) => {
     !isOpen && enableScroll()
     const openPost = () => setOpen(!isOpen)
     return (
-        (<>
+
+        <>
             <Header headerText='User' setThem={props.setThem} theme={props.theme} user={user} />
-            <UserStyled >
+            {isLoading && <Preloader><img src={loading} /> </Preloader> || <UserStyled >
                 <UserConteiner openPost={openPost} setPostId={setPostId} user={user} />
                 {isOpen && <Modal openPost={openPost} isOpen={isOpen} id={postId} user={user} isPost />}
-            </UserStyled>
+            </UserStyled>}
         </>
-        )
+
     )
 }
 

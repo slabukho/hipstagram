@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
     ContainerFeedStyled,
     PostStyled,
-
+    ContainerNoPosts
 } from './styled'
 import Header from '../../components/header'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +12,8 @@ import likeTrue from '../../imgs/like-true.png'
 import { getPostsThunk, likeUserThunk } from '../../store/users/thunks'
 import { AddComments } from '../../components/Modal/styled'
 import send from '../../imgs/send.png'
+import loader from '../../imgs/prloaderFeed.gif'
+import camera from '../../imgs/camera.png'
 
 
 
@@ -64,9 +66,9 @@ const Post = ({ post }) => {
 
 const Feeds = () => {
     useEffect(() => {
-        dispatch(getPostsThunk(token))
+        dispatch(getPostsThunk({ token: token, setLoading: setLoading }))
     }, []);
-    const user = { ...useSelector(getCurrentUserInfo) }
+    const [isLoading, setLoading] = useState(false)
     const dispatch = useDispatch();
     const token = useSelector(getUserTokenSelector)
     const posts = useSelector(getpostsStateSelector)
@@ -74,11 +76,17 @@ const Feeds = () => {
     return (
         <>
             <Header feed />
-            <ContainerFeedStyled>
-                {posts && posts.slice(0).reverse().map(post => {
-                    return <Post post={post} key={post._id} />
-                })}
-            </ContainerFeedStyled>
+            {posts && posts.length ?
+                <ContainerFeedStyled>
+                    {isLoading && <img src={loader} /> || posts && posts.slice(0).reverse().map(post => {
+                        return <Post post={post} key={post._id} />
+                    })}
+                </ContainerFeedStyled> :
+                <ContainerNoPosts>
+                    <img src={camera} alt='' />
+                    <b>No posts Yet</b>
+                </ContainerNoPosts>
+            }
         </>
     )
 }

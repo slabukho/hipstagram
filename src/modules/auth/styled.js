@@ -13,7 +13,7 @@ export const FormStyled = styled.form.attrs(props => ({
         position:relative;
         & > img{
             position:absolute;
-            width:150px;
+            width:50px;
             top:50%;
             left:50%;
             transform:translate(-50%,-50%)

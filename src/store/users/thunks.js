@@ -149,8 +149,9 @@ export const getUsersByLoginThunk = ({ login, token }) => {
 }
 
 
-export const getUserThunk = id => {
+export const getUserThunk = ({ id, setLoading }) => {
     return async (dispatch) => {
+        setLoading(true)
         try {
             const user = await (getUserByIdFetch(id))
             dispatch(getUserAction(user))
@@ -158,6 +159,7 @@ export const getUserThunk = id => {
         catch (e) {
             console.log(e)
         }
+        setLoading(false)
     }
 }
 
@@ -324,8 +326,9 @@ export const followUserThunk = ({ id, token }) => {
 }
 
 
-export const getPostsThunk = (token) => {
+export const getPostsThunk = ({ token, setLoading }) => {
     return async (dispatch) => {
+        setLoading && setLoading(true)
         try {
             const posts = await getFeedFetch(token)
             dispatch(getPostsAction(posts))
@@ -333,6 +336,7 @@ export const getPostsThunk = (token) => {
         catch (e) {
             console.log(e)
         }
+        setLoading && setLoading(false)
     }
 }
 
