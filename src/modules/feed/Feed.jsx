@@ -6,7 +6,7 @@ import {
 } from './styled'
 import Header from '../../components/header'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentUserInfo, getUserTokenSelector, getpostsStateSelector } from '../../store/users/selectors'
+import { getCurrentUserInfoSelector, getUserTokenSelector, getpostsStateSelector } from '../../store/users/selectors'
 import like from '../../imgs/Like.png'
 import likeTrue from '../../imgs/like-true.png'
 import { getPostsThunk, likeUserThunk } from '../../store/users/thunks'
@@ -18,7 +18,7 @@ import camera from '../../imgs/camera.png'
 
 
 const Post = ({ post }) => {
-    const user = useSelector(getCurrentUserInfo)
+    const user = useSelector(getCurrentUserInfoSelector)
 
     useEffect(() => {
         post.likes && post.likes.forEach(likedUser => {
@@ -72,7 +72,6 @@ const Feeds = () => {
     const dispatch = useDispatch();
     const token = useSelector(getUserTokenSelector)
     const posts = useSelector(getpostsStateSelector)
-    console.log(posts)
     return (
         <>
             <Header feed />

@@ -40,7 +40,7 @@ const Header = ({ search, user, settings, feed }) => {
             />}
             {search && <SearchIcon />}
             {!search && <Link to={guide.auth.search.path} ><GoToSearch /></Link>}
-            <HeaderTextStyled>{!search && user && user.login || settings && 'Setting' || feed && 'Feed'}</HeaderTextStyled>
+            <HeaderTextStyled>{!search && user?.login || settings && 'Setting' || feed && 'Feed'}</HeaderTextStyled>
             <IconsCOntatiner>
                 <Link to={guide.auth.feed.path}><img src={news} alt="" /></Link>
                 <Link to={guide.auth.settings.path}><img src={settingImg} alt="" /></Link>

@@ -31,7 +31,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     postStateSelector,
     getUserTokenSelector,
-    getCurrentUserInfo,
+    getCurrentUserInfoSelector,
     getCommentsSelector
 } from '../../store/users/selectors'
 import { getPostAction, getCommentsAction } from '../../store/users/actions'
@@ -144,9 +144,7 @@ const AddPhoto = (props) => {
 }
 
 const Comment = (props) => {
-    console.log(props)
     const dispatch = useDispatch()
-    console.log(new Date(props.time))
     const deleteComment = async () => {
         dispatch(deleteCommentThunk({ commentId: props.comment.id, token: props.token, id: props.post._id }))
     }
@@ -177,11 +175,10 @@ const Modal = (props) => {
     const [isLoading, setLoading] = useState(false)
     const [isLiked, setLike] = useState(false)
     const token = useSelector(getUserTokenSelector)
-    const user = useSelector(getCurrentUserInfo)
+    const user = useSelector(getCurrentUserInfoSelector)
     const dispatch = useDispatch()
     const comments = useSelector(getCommentsSelector)
-    const { register, handleSubmit, errors } = useForm()
-    console.log(comments)
+    const { register, handleSubmit } = useForm()
     const closeModal = () => {
         dispatch(getPostAction(''))
         dispatch(getCommentsAction(''))
@@ -211,10 +208,10 @@ const Modal = (props) => {
                         <UserInfoOpen>
                             <div>
                                 <div>
-                                    <img src={props.user && props.user.avatar || photo} alt="" />
+                                    <img src={props?.user?.avatar || photo} alt="" />
                                 </div>
                                 <p>
-                                    <b>{props.user && props.user.login || user.login}</b>
+                                    <b>{props?.user?.login || user.login}</b>
                                 </p>
 
                             </div>
@@ -222,7 +219,7 @@ const Modal = (props) => {
                         </UserInfoOpen>
                         <OpenComments>
                             {comments && comments.map(comment => {
-                                return <Comment comment={comment} user={user} token={token} post={post} />
+                                return <Comment comment={comment} user={user} token={token} post={post} key={comment.id} />
                             })}
                         </OpenComments>
 
@@ -234,7 +231,7 @@ const Modal = (props) => {
                                 <img src={send} alt="send" />
                             </span>
                             <p>
-                                {post.likes && post.likes.length ? 'Likes' : ''} <b>{post.likes && post.likes.length ? post.likes[0].login : 'no one did not like'}</b> {post.likes && post.likes.length > 1 ? 'and' : ''} <b>{post.likes && post.likes.length > 1 ? post.likes.length - 1 : ''}</b> {post.likes && post.likes.length > 1 ? 'other...' : ''}
+                                {post?.likes?.length ? 'Likes' : ''} <b>{post?.likes?.length ? post.likes[0].login : 'no one did not like'}</b> {post?.likes?.length > 1 ? 'and' : ''} <b>{post?.likes?.length > 1 ? post.likes.length - 1 : ''}</b> {post?.likes?.length > 1 ? 'other...' : ''}
                             </p>
                         </LikesOpen>
                         <AddComments>

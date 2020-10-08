@@ -21,7 +21,7 @@ import {
 import Modal from '../../components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserThunk, followUserThunk } from '../../store/users/thunks'
-import { getUserSelector, getUserTokenSelector, getCurrentUserInfo } from '../../store/users/selectors'
+import { getUserSelector, getUserTokenSelector, getCurrentUserInfoSelector } from '../../store/users/selectors'
 import loading from '../../imgs/loading.gif'
 
 const PictureUser = (props) => {
@@ -37,7 +37,7 @@ const PictureUser = (props) => {
 }
 
 const UserConteiner = ({ user, setPostId, openPost }) => {
-    const currentUser = { ...useSelector(getCurrentUserInfo) }
+    const currentUser = { ...useSelector(getCurrentUserInfoSelector) }
     useEffect(() => {
         currentUser.following && currentUser.following.forEach(follower => {
             if (follower.id === user.id) setFollow(true)
@@ -59,9 +59,9 @@ const UserConteiner = ({ user, setPostId, openPost }) => {
                 </ImgAva>
                 <div    >
                     <span>
-                        <p><b>{user.posts && user.posts.length}</b> posts</p>
-                        <p><b>{user.followersCount && user.followersCount} </b>followers</p>
-                        <p><b>{user.followingsCount && user.followingsCount} </b>followings</p>
+                        <p><b>{user?.posts?.length}</b> posts</p>
+                        <p><b>{user.followersCount && user?.followersCount} </b>followers</p>
+                        <p><b>{user.followingsCount && user?.followingsCount} </b>followings</p>
                     </span>
                     {isFollow ? <FollowingButton children='unfollow' onClick={follow} /> : <Button children='follow' onClick={follow} />}
                     <p>{user.firstName} {user.lastName}</p>
@@ -69,10 +69,10 @@ const UserConteiner = ({ user, setPostId, openPost }) => {
             </HeaderUserStyled>
             <hr />
             <PuplicationsUser>
-                {user.posts && user.posts.slice(0).reverse().map(post => {
+                {user?.posts?.slice(0).reverse().map(post => {
                     return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={openPost} key={post._id} />
                 })}
-                {user.posts && !user.posts.length && <p>Not puplications yet</p>}
+                {!user?.posts?.length && <p>Not puplications yet</p>}
             </PuplicationsUser>
         </ContainerUserStyled>
     )

@@ -19,7 +19,7 @@ import {
 import Modal from '../../components/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserInfoThunk } from '../../store/users/thunks'
-import { getUserTokenSelector, getCurrentUserInfo } from '../../store/users/selectors'
+import { getUserTokenSelector, getCurrentUserInfoSelector } from '../../store/users/selectors'
 
 
 const PictureUser = (props) => {
@@ -35,7 +35,6 @@ const PictureUser = (props) => {
 }
 
 const UserConteiner = ({ user, setPostId, openPost, openAddphoto, openAddPost }) => {
-    console.log(user.followers)
     return (
         <ContainerUserStyled>
             <HeaderUserStyled>
@@ -47,9 +46,9 @@ const UserConteiner = ({ user, setPostId, openPost, openAddphoto, openAddPost })
                 </ImgAva>
                 <div    >
                     <span>
-                        <p><b>{user.posts && user.posts.length}</b> posts</p>
-                        <p><b>{user.followers && user.followers.length} </b>followers</p>
-                        <p><b>{user.following && user.following.length} </b>followings</p>
+                        <p><b>{user?.posts?.length}</b> posts</p>
+                        <p><b>{user?.followers?.length} </b>followers</p>
+                        <p><b>{user?.following?.length} </b>followings</p>
                     </span>
                     <p>{user.firstName} {user.lastName}</p>
                 </div>
@@ -57,10 +56,10 @@ const UserConteiner = ({ user, setPostId, openPost, openAddphoto, openAddPost })
             <Plus onClick={openAddPost} />
             <hr />
             <PuplicationsUser>
-                {user.posts && user.posts.slice(0).reverse().map(post => {
+                {user?.posts?.slice(0).reverse().map(post => {
                     return <PictureUser img={post.imgUrl} idPost={post._id} setPostId={setPostId} switchModal={openPost} key={post._id} />
                 })}
-                {user.posts && !user.posts.length && <p>Not puplications yet</p>}
+                {!user?.posts?.length && <p>Not puplications yet</p>}
             </PuplicationsUser>
         </ContainerUserStyled>
     )
@@ -75,7 +74,7 @@ const User = (props) => {
     useEffect(() => {
         dispatch(getUserInfoThunk({ token: token }))
     }, []);
-    const user = { ...useSelector(getCurrentUserInfo) }
+    const user = { ...useSelector(getCurrentUserInfoSelector) }
     const [isPost, setPost] = useState(false)
     const [postId, setPostId] = useState(null)
     const [isOpen, setOpen] = useState(false)

@@ -27,9 +27,6 @@ export const getCurrentUserAction = currentUser => {
     }
 }
 
-export const loginChangeAction = () => {
-
-}
 
 export const updateUserAction = currentUser => {
     return {
@@ -45,7 +42,7 @@ export const getUsersAction = users => {
     }
 }
 
-export const updateUserPassword = () => {
+export const updateUserPasswordAcion = () => {
     return {
         type: actionTypes.UPDATE_PASSWORD
     }
@@ -67,7 +64,7 @@ export const getPostAction = post => {
     }
 }
 
-export const addNewPost = newPost => {
+export const addNewPostAcion = newPost => {
     return {
         type: actionTypes.ADD_NEW_POST,
         payload: newPost
@@ -90,13 +87,13 @@ export const getPostsAction = posts => {
 }
 
 
-export const likePost = () => {
+export const likePostAcion = () => {
     return {
         type: actionTypes.LIKE_POST
     }
 }
 
-export const changeAva = () => {
+export const changeAvaAcion = () => {
     return {
         type: actionTypes.CHANGE_AVA,
     }

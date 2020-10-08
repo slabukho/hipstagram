@@ -7,7 +7,7 @@ import {
 } from './styled'
 import Header from '../../components/header'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentUserInfo, getUserTokenSelector } from '../../store/users/selectors'
+import { getCurrentUserInfoSelector, getUserTokenSelector } from '../../store/users/selectors'
 import Input from '../../components/input'
 import Button from '../../components/button'
 import { changeThemeAction } from '../../store/users/actions'
@@ -132,7 +132,7 @@ const ChangePasswordUserForm = ({ dispatch, token }) => {
                     })}
 
                 />
-                {errors.password && <p>{errors.password.message}</p>}
+                {<p>{errors?.password?.message}</p>}
 
                 <label>Confirm Password:</label>
 
@@ -145,7 +145,7 @@ const ChangePasswordUserForm = ({ dispatch, token }) => {
                             value === password.current || "The passwords do not match"
                     })}
                 />
-                {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+                {<p>{errors?.confirmPassword?.message}</p>}
 
                 <Button children={'Change password'} />
             </StyledPasswordChangeForm>
@@ -161,7 +161,7 @@ const Settings = () => {
     const changeTheme = () => {
         dispatch(changeThemeAction())
     }
-    const user = { ...useSelector(getCurrentUserInfo) }
+    const user = { ...useSelector(getCurrentUserInfoSelector) }
     return (
         <>
             <Header settings />

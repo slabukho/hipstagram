@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Layout from '../Layout'
 import guide from '../../constants/modulesGuide'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { getCurrentUserIsAuth } from '../../store/users/selectors'
+import { getCurrentUserIsAuthSelector } from '../../store/users/selectors'
 import { useSelector, useDispatch } from 'react-redux'
 import { ToastError } from '../../components/toast'
 import loading from '../../imgs/loading.gif'
@@ -27,7 +27,7 @@ const Authorization = () => {
 
 
 const Application = () => {
-    const isAuth = useSelector(getCurrentUserIsAuth)
+    const isAuth = useSelector(getCurrentUserIsAuthSelector)
     const dispatch = useDispatch()
     const [isLoading, setLoading] = useState(false)
     const token = useSelector(getUserTokenSelector)

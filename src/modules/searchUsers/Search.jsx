@@ -12,7 +12,7 @@ import {
 import { FollowingButton } from '../User/styled'
 import { getUsersThunk, getUserThunk, followUserThunk } from '../../store/users/thunks'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUsersSelector, getUserTokenSelector, getCurrentUserInfo } from '../../store/users/selectors'
+import { getUsersSelector, getUserTokenSelector, getCurrentUserInfoSelector } from '../../store/users/selectors'
 import { selectIdUserAction, getUserAction } from '../../store/users/actions'
 import UserImg from '../../imgs/ava.png'
 import { Link } from 'react-router-dom';
@@ -21,7 +21,6 @@ import guide from '../../constants/modulesGuide'
 
 const User = ({ user, currentUser, selectedUser }) => {
     const [isFollow, setFollow] = useState(false)
-    console.log(currentUser)
     useEffect(() => {
         currentUser.following.forEach(follower => {
             if (follower.id === user._id) setFollow(true)
@@ -70,7 +69,7 @@ const Search = (props) => {
     const dispatch = useDispatch()
     dispatch(getUserAction(''))
     const token = useSelector(getUserTokenSelector)
-    const currentUser = { ...useSelector(getCurrentUserInfo) }
+    const currentUser = { ...useSelector(getCurrentUserInfoSelector) }
     useEffect(() => {
         dispatch(getUserAction(currentUser))
         dispatch(getUsersThunk(token))

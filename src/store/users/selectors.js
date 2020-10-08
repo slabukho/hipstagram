@@ -1,16 +1,16 @@
 export const userStateSelector = state => state.user
 
-export const getCurrentUser = state => userStateSelector(state).currentUser
+export const getCurrentUserSelector = state => userStateSelector(state).currentUser
 
 export const getSelectedUserSelector = state => userStateSelector(state).selectedUserId
 
 export const getUserSelector = state => userStateSelector(state).selectedUser
 
-export const getUserTokenSelector = state => getCurrentUser(state).accessToken
+export const getUserTokenSelector = state => getCurrentUserSelector(state).accessToken
 
-export const getCurrentUserIsAuth = state => getCurrentUser(state).isAuth
+export const getCurrentUserIsAuthSelector = state => getCurrentUserSelector(state).isAuth
 
-export const getCurrentUserInfo = state => userStateSelector(state).user
+export const getCurrentUserInfoSelector = state => userStateSelector(state).user
 
 export const getCommentsSelector = state => userStateSelector(state).comments
 
